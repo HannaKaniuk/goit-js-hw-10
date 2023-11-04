@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.breed-select {
+  width: 300px;
+  padding: 10px;
+  margin: 20px;
+  font-size: 1rem;
+  
+}
+
+.loader, .error {
+  display: none;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.cat-info {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.cat-image {
+  max-width: 100%;
+  border: 1px solid #ccc;
+  max-height: 600px;
+ 
+}
+
+#cat-name {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+#cat-description {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+#cat-temperament {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.loader {
+  display: none; /* Початково приховуємо завантажувач. */
+}
+
+.breed-select {
+  display: none; /* Початково приховуємо select під час завантаження порід. */
+}
+
+.cat-info {
+  display: none; /* Початково приховуємо інформацію про кота. */
+}
+
+.error {
+  display: none; /* Початково приховуємо елемент помилки. */
+}
