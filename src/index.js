@@ -36,23 +36,23 @@ function catTemplate(response) {
 }
 
 function onSelectChange(event) {
-  const selectedBreedId = event.target.value;
-  refs.catInfo.innerHTML = '';
-  refs.loader.style.display = 'block';
-
-  fetchCatByBreed(selectedBreedId)
-    .then((catData) => {
-      refs.loader.style.display = 'none';
-      const catHtml = catTemplate(catData);
-      refs.catInfo.insertAdjacentHTML('beforeend', catHtml);
-      refs.catInfo.style.display = 'block';
-    })
-    .catch((err) => {
-      refs.loader.style.display = 'none';
-      refs.error.style.display = 'block';
-      refs.catInfo.style.display = 'block';
-    });
-}
+    const selectedBreedId = event.target.value;
+    refs.catInfo.innerHTML = '';
+    refs.loader.style.display = 'block';
+  
+    fetchCatByBreed(selectedBreedId)
+      .then((catData) => {
+        refs.loader.style.display = 'none';
+        const catHtml = catTemplate(catData);
+        refs.catInfo.insertAdjacentHTML('beforeend', catHtml);
+        refs.catInfo.style.display = 'block';
+      })
+      .catch((err) => {
+        refs.loader.style.display = 'none';
+        refs.error.style.display = 'block';
+        refs.catInfo.style.display = 'block';
+      });
+  }
 
 fetchBreeds()
   .then((breeds) => {
