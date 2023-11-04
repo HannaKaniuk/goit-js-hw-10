@@ -12,7 +12,6 @@ refs.error.style.display = 'none';
 
 function catTemplate(response) {
   const cat = response[0];
-  console.log(cat);
   const template = `
     <div class="cat-card card">
       <div class="image-container">
@@ -27,13 +26,13 @@ function catTemplate(response) {
         <p class="cat-info">
            ${cat.breeds[0].description}
         </p>
-        <h3>Temperament:</h3>
+        <h3>Характер:</h3>
         <p class="cat-temperament">
           ${cat.breeds[0].temperament}
         </p>
       </div>
     </div>`;
-  refs.catInfo.innerHTML = template;
+  return template;
 }
 
 function onSelectChange(event) {
@@ -51,7 +50,7 @@ function onSelectChange(event) {
     .catch((err) => {
       refs.loader.style.display = 'none';
       refs.error.style.display = 'block';
-      
+      refs.catInfo.style.display = 'block';
     });
 }
 
@@ -68,6 +67,58 @@ fetchBreeds()
   .catch((err) => {
     refs.error.style.display = 'block';
     console.error('Ошибка при получении пород:', err);
+    refs.catInfo.style.display = 'block';
   });
 
 refs.breedSelect.addEventListener('change', onSelectChange);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
