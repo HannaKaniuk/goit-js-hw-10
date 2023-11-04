@@ -55,7 +55,7 @@ function onSelectChange(event) {
   const selectedBreedId = event.target.value;
   refs.catInfo.innerHTML = '';
   showLoader();
-  hideError(); // Hide any previous errors when making a new request
+  hideError();
 
   fetchCatByBreed(selectedBreedId)
     .then((catData) => {
@@ -66,7 +66,7 @@ function onSelectChange(event) {
     })
     .catch((err) => {
       hideLoader();
-      showError(); // Show the error element
+      showError(); 
       refs.catInfo.style.display = 'block';
     });
 }
@@ -83,7 +83,7 @@ fetchBreeds()
     hideLoader();
   })
   .catch((err) => {
-    showError(); // Show the error element
+    showError(); 
     console.error('Ошибка при получении пород:', err);
     refs.catInfo.style.display = 'block';
     hideLoader();
