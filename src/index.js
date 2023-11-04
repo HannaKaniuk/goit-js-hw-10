@@ -10,6 +10,22 @@ const refs = {
 refs.loader.style.display = 'none';
 refs.error.style.display = 'none';
 
+function showLoader() {
+  refs.loader.style.display = 'block';
+}
+
+function hideLoader() {
+  refs.loader.style.display = 'none';
+}
+
+function showError() {
+  refs.error.style.display = 'block';
+}
+
+function hideError() {
+  refs.error.style.display = 'none';
+}
+
 function catTemplate(response) {
   const cat = response[0];
   const template = `
@@ -36,23 +52,24 @@ function catTemplate(response) {
 }
 
 function onSelectChange(event) {
-    const selectedBreedId = event.target.value;
-    refs.catInfo.innerHTML = '';
-    refs.loader.style.display = 'block';
-  
-    fetchCatByBreed(selectedBreedId)
-      .then((catData) => {
-        refs.loader.style.display = 'none';
-        const catHtml = catTemplate(catData);
-        refs.catInfo.insertAdjacentHTML('beforeend', catHtml);
-        refs.catInfo.style.display = 'block';
-      })
-      .catch((err) => {
-        refs.loader.style.display = 'none';
-        refs.error.style.display = 'block';
-        refs.catInfo.style.display = 'block';
-      });
-  }
+  const selectedBreedId = event.target.value;
+  refs.catInfo.innerHTML = '';
+  showLoader();
+  hideError(); // Hide any previous errors when making a new request
+
+  fetchCatByBreed(selectedBreedId)
+    .then((catData) => {
+      hideLoader();
+      const catHtml = catTemplate(catData);
+      refs.catInfo.insertAdjacentHTML('beforeend', catHtml);
+      refs.catInfo.style.display = 'block';
+    })
+    .catch((err) => {
+      hideLoader();
+      showError(); // Show the error element
+      refs.catInfo.style.display = 'block';
+    });
+}
 
 fetchBreeds()
   .then((breeds) => {
@@ -63,11 +80,13 @@ fetchBreeds()
       refs.breedSelect.appendChild(option);
     });
     refs.breedSelect.style.display = 'block';
+    hideLoader();
   })
   .catch((err) => {
-    refs.error.style.display = 'block';
+    showError(); // Show the error element
     console.error('Ошибка при получении пород:', err);
     refs.catInfo.style.display = 'block';
+    hideLoader();
   });
 
 refs.breedSelect.addEventListener('change', onSelectChange);
