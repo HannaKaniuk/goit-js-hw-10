@@ -1,7 +1,16 @@
+:root{
+  --background-color: #ffffff;
+  --orange: #FF3D00;
+  --gray: #ccc; 
+}
+
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  text-align: center;
+  font-family: "Roboto", sans-serif;
+  color: #434455;
+  font-size: 16px;
+  background-color: var(--background-color);
+  margin: 0;
 }
 
 .breed-select {
@@ -18,48 +27,85 @@ body {
   text-align: center;
 }
 
-.cat-info {
-  text-align: center;
-  margin-top: 20px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: var(--gray) var(--gray) transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  display: none; 
 }
+.loader::after,
+.loader::before {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent transparent var(--orange) var(--orange);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+.loader::before {
+  width: 32px;
+  height: 32px;
+  border-color: var(--gray) var(--gray) transparent transparent;
+  animation: rotation 1.5s linear infinite;
+}
+    
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+    
 
 .cat-image {
   max-width: 100%;
-  border: 1px solid #ccc;
-  max-height: 600px;
- 
+  border: 20px solid var(--background-color);
+  
+}
+.cat-body{
+  display: block;
+  padding-left: 50px;
 }
 
-#cat-name {
-  font-size: 1.5rem;
-  margin-top: 10px;
+.cat-card {
+display: flex;
+align-items:center;
 }
 
-#cat-description {
-  font-size: 1rem;
-  margin-top: 10px;
-}
+.cat-name{
 
-#cat-temperament {
-  font-size: 1rem;
-  margin-top: 10px;
+  font-size: 40px;
 }
-.loader {
-  display: none; /* Початково приховуємо завантажувач. */
+.cat-info{
+  
+  font-size: 20px;
 }
-
-.breed-select {
-  display: none; /* Початково приховуємо select під час завантаження порід. */
-}
-
-.cat-info {
-  display: none; /* Початково приховуємо інформацію про кота. */
-}
-
 .error {
-  display: none; /* Початково приховуємо елемент помилки. */
+  display: none; 
 }

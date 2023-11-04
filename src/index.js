@@ -1,4 +1,10 @@
+import 'notiflix/dist/notiflix-3.2.6.min.css';
+import Notiflix from 'notiflix';
+
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
+import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
+import './css/style.css';
 
 const refs = {
   breedSelect: document.querySelector('.breed-select'),
@@ -7,24 +13,34 @@ const refs = {
   catInfo: document.querySelector('.cat-info'),
 };
 
-refs.loader.style.display = 'none';
-refs.error.style.display = 'none';
 
-function showLoader() {
-  refs.loader.style.display = 'block';
-}
 
-function hideLoader() {
-  refs.loader.style.display = 'none';
-}
+class ElementVisibilityManager {
+    constructor(loaderElement, errorElement) {
+      this.loaderElement = loaderElement;
+      this.errorElement = errorElement;
+      
+    }
+  
+    showLoader() {
+      this.loaderElement.style.display = 'block';
+    }
+  
+    hideLoader() {
+      this.loaderElement.style.display = 'none';
+    }
+  
+    showError() {
+      this.errorElement.style.display = 'block';
+    }
+  
+    hideError() {
+      this.errorElement.style.display = 'none';
+    }
+  }
+  
+  const visibilityManager = new ElementVisibilityManager(refs.loader, refs.error);
 
-function showError() {
-  refs.error.style.display = 'block';
-}
-
-function hideError() {
-  refs.error.style.display = 'none';
-}
 
 function catTemplate(response) {
   const cat = response[0];
@@ -42,7 +58,7 @@ function catTemplate(response) {
         <p class="cat-info">
            ${cat.breeds[0].description}
         </p>
-        <h3>Характер:</h3>
+        <h3>Temperament:</h3>
         <p class="cat-temperament">
           ${cat.breeds[0].temperament}
         </p>
@@ -54,20 +70,26 @@ function catTemplate(response) {
 function onSelectChange(event) {
   const selectedBreedId = event.target.value;
   refs.catInfo.innerHTML = '';
-  showLoader();
-  hideError();
+  visibilityManager.showLoader();
+  visibilityManager.hideError();
 
   fetchCatByBreed(selectedBreedId)
     .then((catData) => {
-      hideLoader();
+      visibilityManager.hideLoader();
       const catHtml = catTemplate(catData);
-      refs.catInfo.insertAdjacentHTML('beforeend', catHtml);
+      
+      refs.catInfo.innerHTML = catHtml;
       refs.catInfo.style.display = 'block';
     })
     .catch((err) => {
-      hideLoader();
-      showError(); 
+      visibilityManager.hideLoader();
+      visibilityManager.showError();
       refs.catInfo.style.display = 'block';
+      Notiflix.Report.failure(
+        'Notiflix Failure',
+        '"Failure is simply the opportunity to begin again, this time more intelligently." <br/><br/>- Henry Ford',
+        'Okay',
+        );
     });
 }
 
@@ -79,17 +101,22 @@ fetchBreeds()
       option.textContent = breed.name;
       refs.breedSelect.appendChild(option);
     });
+   
     refs.breedSelect.style.display = 'block';
-    hideLoader();
+    new SlimSelect({
+        select: '.breed-select'
+      })
+    visibilityManager.hideLoader();
   })
   .catch((err) => {
-    showError(); 
+    visibilityManager.showError();
     console.error('Ошибка при получении пород:', err);
     refs.catInfo.style.display = 'block';
-    hideLoader();
+    visibilityManager.hideLoader();
   });
 
 refs.breedSelect.addEventListener('change', onSelectChange);
+
 
 
 
